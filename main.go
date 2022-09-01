@@ -35,6 +35,7 @@ func main(){
 	router.POST("/push",str.Push)
 	router.DELETE("/pop", str.Pop)
 	router.GET("display", str.Display)
+	router.GET("/sum",str.AddStackElements)
 	router.Run("localhost:8080")
 
 }

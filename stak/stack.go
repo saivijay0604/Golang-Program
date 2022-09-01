@@ -1,9 +1,10 @@
 package stak
 
 import (
+	"fmt"
+	"github.com/gin-gonic/gin"
 	//"fmt"
 	"net/http"
-	"github.com/gin-gonic/gin"
 )
 
 type StackStruck struct {
@@ -39,4 +40,14 @@ func (ss *StackStruck) Pop(c *gin.Context){
 
 func (ss *StackStruck) Display(c *gin.Context){
 	 c.JSON(http.StatusOK,ss.num)
+}
+
+func (ss *StackStruck) AddStackElements(c *gin.Context){
+
+	sum:=0
+	for _,v := range ss.num{
+		sum =sum+ v
+	}
+	fmt.Println(sum)
+	c.JSON(http.StatusOK,sum)
 }
