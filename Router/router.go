@@ -10,20 +10,22 @@ var err error
 
 
 func ConnectRouter(){
-	env.DB,err = PgConnect.CheckDB()
+	//connect to Postgresql
+	env.DB,err = PgConnect.ConnectDB()
 	if err != nil {
 		log.Fatalf("failed to start the server: %v", err)
 	}
+	defer env.DB.Close()
 
-
+	//router's
 	router := gin.Default()
-	// connect to DB first
-	router.GET("pgConnection", PgConnect.Connection) //check the DB connection
-	router.GET("pgConnection/:str", PgConnect.Create) //Create Table
-	router.GET("pgConnection/select", env.SelectStudent) //select data
-	router.POST("pgConnection/:str", env.InsertStudent) //Insert data
-	router.PUT("pgConnection/:str", env.UpdateStudent) //Update Date
-	router.DELETE("pgConnection/:id", env.DeleteStudentByID) //Delete Data
+	//CRUD operations
+
+	router.GET("student", env.SelectStudent)//select data
+	router.GET("student/:id", env.SelectStudentByID) //select student by ID
+	router.POST("student", env.InsertStudent) //Insert data
+	router.PUT("student", env.UpdateStudent) //Update Date
+	router.DELETE("student/:id", env.DeleteStudentByID) //Delete Data
 
 
 	router.Run("localhost:8081")

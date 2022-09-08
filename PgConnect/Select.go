@@ -1,46 +1,62 @@
 package PgConnect
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strconv"
 )
 func NewStudent(id int, name string, result int) Student {
 	return Student{id, name, result}
 }
+var id int
+var name string
+var result int
+
+
 func (env Env) SelectStudent(c *gin.Context) {
-	// Call BindJSON to bind the received JSON to
-	// newAlbum.
-	str := c.Param("str")
-	if str == "select" {
-		env.DB,err = CheckDB()
-		//	c.JSON(http.StatusOK,"connected")
-		var newStudent Student
-		if err := c.BindJSON(&newStudent); err != nil {
-			log.Printf("invalid JSON body: %v", err)
-			makeGinResponse(c, http.StatusNotFound, err.Error())
+
+	q := `select * from student`
+	rows, err := env.DB.Query(q)
+	var a = make([]Student, 0)
+	//fmt.Println(a)
+	for rows.Next() {
+		err = rows.Scan(&id, &name, &result)
+		if err != nil {
+			log.Printf("error occurred while reading the database rows: %v", err)
+			makeGinResponse(c, http.StatusInternalServerError, err.Error())
 			return
 		}
+		a = append(a, NewStudent(id, name, result))
+	}
+	makeGinResponse(c, http.StatusOK,a)
 
-		a:= make([]Student,0)
+}
 
-		q := `select * from student`
-		_,err := env.DB.Exec(q)
-		//err = rows.Scan(newStudent.ID,newStudent.Name, newStudent.Result)
-		//defer env.DB.QueryRow(q).Close()
-		for i:=0;;i++ {
-			var id int
-			var name  string
-			var result int
-			//err = rows.Scan(&id, &name, result)
-			if err != nil {
-				log.Printf("error occurred while reading the database rows: %v", err)
-				//rowReadErr = true
-				break
-			}
-			a = append(a, NewStudent(id, name, result))
+func (env Env) SelectStudentByID(c *gin.Context){
+	//var newStudent Student
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		e := fmt.Sprintf("received invalid id path param which is not string: %v", c.Param("id"))
+		log.Println(e)
+		makeGinResponse(c, http.StatusNotFound, e)
+		return
+	}
+
+	var s = make([]Student, 0)
+		q := `select * from student where id=$1`
+		res, err := env.DB.Query(q, id)
+		for res.Next() {
+			err = res.Scan(&id, &name, &result)
+			s = append(s, NewStudent(id, name, result))
+				if err != nil {
+					e := fmt.Sprintf("error occurred while selecting the record with id: %d and error is: %v", id, err)
+					log.Println(e)
+					makeGinResponse(c, http.StatusInternalServerError, e)
+					return
+				}
+
 		}
-		c.JSON(http.StatusOK, a)
-
-}}
-
+	makeGinResponse(c, http.StatusOK,s)
+}
