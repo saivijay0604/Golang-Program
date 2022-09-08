@@ -7,7 +7,6 @@ import (
 )
 
 var str = stak.StackStruck{}
-//var stud =PgConnect.Student{}
 
 func main(){
 	router := gin.Default()
@@ -19,7 +18,6 @@ func main(){
 	router.GET("/sum",str.AddStackElements)
 	//Fib series
 	router.GET("/Fib/:n", Fibonacci.FibSeq)
-
 
 	//Local host
 	router.Run("localhost:8080")
