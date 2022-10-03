@@ -13,7 +13,7 @@ func main(){
  func reverseString(s string) string {
 	 var reverse  string
 		 for _, v := range s {
-
+				fmt.Println(string(v))
 			 reverse = string(v) + reverse
 
 		 }

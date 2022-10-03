@@ -4,13 +4,13 @@ package main
 import "fmt"
 
 func main(){
-	//fib()
-	var a, b int
+
+	 a, b :=0,1
 	n:=10
-	a = 0
-	b = 1
-	fmt.Print( a, b," ")
+
+	fmt.Print(a,b)
 	printFibonacii(a, b, n)
+
 
 
 
@@ -37,9 +37,10 @@ func main(){
 
 func printFibonacii(a int, b int, n int) {
 	sum := 0
-	if n > 2 {
+
+	if n > 0 {
 		sum = a + b
-		fmt.Printf("%d ", sum)
+		fmt.Print( " " ,sum)
 		a,b = b,sum
 		printFibonacii(a, b, n-1)
 	}
