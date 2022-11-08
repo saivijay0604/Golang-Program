@@ -10,10 +10,6 @@ func main(){
 
 	fmt.Print(a,b)
 	printFibonacii(a, b, n)
-
-
-
-
 	//fmt.Println("fib for non rec" ,fib(n))
 
 }
@@ -37,14 +33,15 @@ func main(){
 
 func printFibonacii(a int, b int, n int) {
 	sum := 0
-
-	if n > 0 {
+	if n > 2 {
 		sum = a + b
-		fmt.Print( " " ,sum)
-		a,b = b,sum
+		fmt.Print(" ", sum)
+		a, b = b, sum
 		printFibonacii(a, b, n-1)
 	}
+
 }
+
 
 
 

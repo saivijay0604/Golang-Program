@@ -18,5 +18,5 @@ func isPerfectSquare(num int) bool {
 			}
 		}
 	}
-	return false;
+	return false
 }

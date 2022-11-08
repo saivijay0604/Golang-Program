@@ -14,8 +14,13 @@ func main(){
 func totalMissElements(statues []int) int {
 	sort.Ints(statues)
 	cnt:=0
-	for i:=0; i<len(statues)-1; i++{
-		cnt =cnt+ statues[i+1]-statues[i]-1
+	//for i:=0; i<len(statues)-1; i++{
+		//cnt =cnt+ statues[i+1]-statues[i]-1
+		for k,v:=range statues{
+			if v+1 == statues[k+1]{
+				continue
+			}
+		cnt++
 	}
 	return cnt
 

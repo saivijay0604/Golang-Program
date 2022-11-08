@@ -2,10 +2,6 @@ package main
 
 import "fmt"
 
-
-
-//type StackStruct []int
-
 type StackStruck struct {
 	num []int
 }
@@ -13,7 +9,6 @@ type StackStruck struct {
 
 
 func main(){
-
 	stack := StackStruck{}
 	stack.Push(1)
 	stack.Push(2)

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 func main() {
 	arr:= []int{1,2,3,4,6,7,8}
@@ -12,7 +11,7 @@ func main() {
 }
 
 func binarySearch(arr []int, target int) int {
-	sort.Ints(arr)
+	//sort.Ints(arr)
 	left := 0
 	right := len(arr) - 1
 	for left <= right {

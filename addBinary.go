@@ -35,7 +35,5 @@ func addBinary(a string, b string) string {
 		}
 		result = strconv.Itoa(sum) + result
 	}
-
-
 	return result
 }
